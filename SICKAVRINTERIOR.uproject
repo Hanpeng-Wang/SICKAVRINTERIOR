@@ -9,24 +9,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "OpenXR",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64",
-				"Linux",
-				"Android",
-				"HoloLens"
-			]
-		},
-		{
-			"Name": "OculusVR",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64",
-				"Android"
-			]
-		},
-		{
 			"Name": "Bridge",
 			"Enabled": true,
 			"SupportedTargetPlatforms": [
