@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "GameFramework/DefaultPawn.h"
 #include "Components/SphereComponent.h"
 #include "Components/MaterialBillboardComponent.h"
-#include "GameFramework/FloatingPawnMovement.h"
+#include "GameFramework/PawnMovementComponent.h"
 #include "RayMarchPawn.generated.h"
 
 UCLASS()
-class SICKAVRINTERIOR_API ARayMarchPawn : public APawn
+class SICKAVRINTERIOR_API ARayMarchPawn : public ADefaultPawn
 {
 	GENERATED_BODY()
 
@@ -18,8 +19,8 @@ public:
 	// Sets default values for this pawn's properties
 	ARayMarchPawn();
 
-	UFUNCTION(BlueprintCallable, Category = "Pawn")
-	virtual void MoveForward(float Val);
+	//UFUNCTION(BlueprintCallable, Category = "Pawn")
+	//virtual void MoveForward(float Val);
 
 protected:
 	// Called when the game starts or when spawned
@@ -30,25 +31,25 @@ protected:
 	class UCameraComponent* CameraComp;
 
 	/** DefaultPawn movement component */
-	UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UPawnMovementComponent> MovementComponent;
+	//UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	//TObjectPtr<UPawnMovementComponent> MovementComponent;
 
 private:
 	/** DefaultPawn collision component */
-	UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<USphereComponent> CollisionComponent;
+	//UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	//TObjectPtr<USphereComponent> CollisionComponent;
 
 
-	UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UMaterialBillboardComponent> BillBoardComponent;
+	//UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	//TObjectPtr<UMaterialBillboardComponent> BillBoardComponent;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual UPawnMovementComponent* GetMovementComponent() const override;
+	//virtual UPawnMovementComponent* GetMovementComponent() const override;
 
 };
