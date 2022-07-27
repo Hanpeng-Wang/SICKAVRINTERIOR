@@ -3,12 +3,13 @@
 
 #include "RayMarchPawn.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/FloatingPawnMovement.h"
 
 // Sets default values
 ARayMarchPawn::ARayMarchPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	/*PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = true;
 
 	BaseEyeHeight = 0.0f;
 	bCollideWhenPlacing = false;
@@ -32,10 +33,10 @@ ARayMarchPawn::ARayMarchPawn()
 	CameraComp->SetupAttachment(RootComponent);
 
 	BillBoardComponent = CreateDefaultSubobject<UMaterialBillboardComponent>(TEXT("MaterialBillboardCom"));
-	BillBoardComponent->SetupAttachment(RootComponent);*/
+	BillBoardComponent->SetupAttachment(RootComponent);
 
-	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
-	CameraComp->SetupAttachment(GetMeshComponent());
+	/*CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
+	CameraComp->SetupAttachment(GetMeshComponent());*/
 }
 
 // Called when the game starts or when spawned
@@ -53,30 +54,49 @@ void ARayMarchPawn::Tick(float DeltaTime)
 }
 
 // Called to bind functionality to input
-//void ARayMarchPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-//{
-//	Super::SetupPlayerInputComponent(PlayerInputComponent);
-//
-//	PlayerInputComponent->BindAxis("MoveForward", this, &ARayMarchPawn::MoveForward);
-//}
-//
-//UPawnMovementComponent* ARayMarchPawn::GetMovementComponent() const
-//{
-//	return MovementComponent;
-//}
-//
-//
-//void ARayMarchPawn::MoveForward(float Val)
-//{
-//	if (Val != 0.f)
-//	{
-//		if (Controller)
-//		{
-//			FRotator const ControlSpaceRot = Controller->GetControlRotation();
-//
-//			// transform to world space and add it
-//			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::X), Val);
-//		}
-//	}
-//}
+void ARayMarchPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PlayerInputComponent->BindAxis("MoveForward", this, &ARayMarchPawn::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ARayMarchPawn::MoveRight);
+	PlayerInputComponent->BindAxis("LookUp", this, &ARayMarchPawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("Turn", this, &ARayMarchPawn::AddControllerYawInput);
+}
+
+UPawnMovementComponent* ARayMarchPawn::GetMovementComponent() const
+{
+	return MovementComponent;
+}
+
+
+void ARayMarchPawn::MoveForward(float Val)
+{
+	if (Val != 0.f)
+	{
+		if (Controller)
+		{
+			FRotator const ControlSpaceRot = Controller->GetControlRotation();
+
+			// transform to world space and add it
+			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::X), Val);
+		}
+	}
+}
+
+void ARayMarchPawn::MoveRight(float Val)
+{
+	if (Val != 0.f)
+	{
+		if (Controller)
+		{
+			FRotator const ControlSpaceRot = Controller->GetControlRotation();
+
+			// transform to world space and add it
+			AddMovementInput(FRotationMatrix(ControlSpaceRot).GetScaledAxis(EAxis::Y), Val);
+		}
+	}
+}
+
+
 
