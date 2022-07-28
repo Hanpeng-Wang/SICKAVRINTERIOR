@@ -32,11 +32,51 @@ ARayMarchPawn::ARayMarchPawn()
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(RootComponent);
 
-	BillBoardComponent = CreateDefaultSubobject<UMaterialBillboardComponent>(TEXT("MaterialBillboardCom"));
-	BillBoardComponent->SetupAttachment(RootComponent);
+	/*BillBoardComponent = CreateDefaultSubobject<UMaterialBillboardComponent>(TEXT("MaterialBillboardCom"));
+	BillBoardComponent->SetupAttachment(RootComponent);*/
 
-	/*CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
-	CameraComp->SetupAttachment(GetMeshComponent());*/
+	// Structure to hold one-time initialization
+	struct FConstructorStatics
+	{
+		ConstructorHelpers::FObjectFinder<UStaticMesh> PlaneMesh;
+		FConstructorStatics()
+			: PlaneMesh(TEXT("/Engine/BasicShapes/Plane")) {}
+	};
+
+	static FConstructorStatics ConstructorStatics;
+
+	MeshComponent = CreateOptionalDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComponent0"));
+	if (MeshComponent)
+	{
+		MeshComponent->SetStaticMesh(ConstructorStatics.PlaneMesh.Object);
+		MeshComponent->AlwaysLoadOnClient = true;
+		MeshComponent->AlwaysLoadOnServer = true;
+		MeshComponent->bCastDynamicShadow = false;
+		MeshComponent->bAffectDynamicIndirectLighting = false;
+		MeshComponent->bAffectDistanceFieldLighting = false;
+		MeshComponent->bVisibleInRayTracing = false;
+		MeshComponent->PrimaryComponentTick.TickGroup = TG_PrePhysics;
+		MeshComponent->SetupAttachment(CameraComp);
+		MeshComponent->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
+
+		//const float Scale = CollisionComponent->GetUnscaledSphereRadius() / 160.f; // @TODO: hardcoding known size of EngineMeshes.Sphere. Should use a unit sphere instead.
+		//MeshComponent->SetRelativeScale3D(FVector(Scale));
+		MeshComponent->SetGenerateOverlapEvents(false);
+		MeshComponent->SetCanEverAffectNavigation(false);
+
+		FVector Position;
+		Position.X = 50.0f;
+		Position.Y = 0.0f;
+		Position.Z = 0.0f;
+
+		FRotator Rotation;
+		Rotation.Yaw = 0.0f;
+		Rotation.Pitch = 90.0f;
+		Rotation.Roll = 0.0f;
+
+		MeshComponent->SetMobility(EComponentMobility::Movable);
+		MeshComponent->SetRelativeLocationAndRotation(Position, Rotation);
+	}
 }
 
 // Called when the game starts or when spawned

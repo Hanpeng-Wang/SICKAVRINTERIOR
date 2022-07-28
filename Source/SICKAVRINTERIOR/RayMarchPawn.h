@@ -43,8 +43,14 @@ private:
 	TObjectPtr<USphereComponent> CollisionComponent;
 
 
-	UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UMaterialBillboardComponent> BillBoardComponent;
+
+	/*UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UMaterialBillboardComponent> BillBoardComponent;*/
+
+
+	/** The mesh associated with this. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UStaticMeshComponent> MeshComponent;
 
 public:	
 	// Called every frame
