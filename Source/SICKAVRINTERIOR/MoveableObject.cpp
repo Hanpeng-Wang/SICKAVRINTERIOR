@@ -91,7 +91,8 @@ void AMoveableObject::MoveForward(float Val)
 {
 	if (Val != 0.f)
 	{
-		ControlInputVector.X += Val;
+		float scale = 2.0f;
+		ControlInputVector.X += Val * scale;
 	}
 }
 
@@ -100,7 +101,8 @@ void AMoveableObject::MoveRight(float Val)
 {
 	if (Val != 0.f)
 	{	
-		ControlInputVector.Y += Val;	
+		float scale = 2.0f;
+		ControlInputVector.Y += Val * scale;	
 	}
 }
 
@@ -109,7 +111,8 @@ void AMoveableObject::AddYawInput(float Val)
 {
 	if (Val != 0.f)
 	{
-		RotationInput.Yaw += Val;
+		float scale = 2.0f;
+		RotationInput.Yaw += Val * scale;
 	}
 }
 
